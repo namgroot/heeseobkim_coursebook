@@ -312,8 +312,40 @@ tbody tr:nth-child(even){background:#fff}
   .sec{page-break-before:always}
   body{font-size:10.5pt;line-height:1.75}
 }
+
+
+:root{--tb:52px}
+#toc{top:var(--tb);height:calc(100svh - var(--tb))}
+@media(max-width:1000px){#toc{top:0;height:100svh}}
+.topbar{
+  position:sticky;top:0;z-index:40;display:flex;align-items:center;
+  justify-content:space-between;gap:20px;padding:12px clamp(18px,4vw,34px);
+  background:rgba(251,250,246,.94);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--grid);
+}
+.tb-home{
+  font-family:var(--f-disp);font-size:17px;font-weight:700;
+  color:var(--ink);text-decoration:none;letter-spacing:.02em;
+}
+.tb-nav{display:flex;gap:4px;flex-wrap:wrap}
+.tb-nav a{
+  font-size:13px;color:var(--ink-2);text-decoration:none;
+  padding:6px 11px;border-radius:2px;transition:.15s;white-space:nowrap;
+}
+.tb-nav a:hover{background:var(--paper-2);color:var(--ink)}
+.tb-nav a.cur{color:var(--pyo);box-shadow:inset 0 -2px 0 var(--pyo)}
+@media(max-width:560px){.tb-nav a{font-size:12px;padding:5px 8px}}
 </style>
 </head><body>
+
+<div class="topbar">
+  <a class="tb-home" herf="index.html">김희섭</a>
+  <nav class="tb-nav">
+    <a herf="brain-1.html">뇌 이야기 1</a>
+    <a herf="brain-2.html">뇌 이야기 2</a>
+    <a herf="coursebook.html" class="cur">사유와 표현</a>
+  </nav>
+</div>
 
 <div id="cover">
   <div class="cv-grid" aria-hidden="true"></div>
