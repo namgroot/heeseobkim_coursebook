@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>김희섭 — 언어학과 뇌과학</title>
+<meta name="description" content="부경대학교 명예교수 김희섭. 뇌신경언어학의 관점에서 쓴 『뇌 이야기 1·2』와 15주 글쓰기 코스워크북 『사유와 표현』 전문을 온라인으로 공개합니다.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Serif+KR:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>/* ==========================================================================
+   사유와 표현 — web edition
+   Direction: Korean manuscript paper (원고지). The square is the unit of
+   writing in this course, so it is the unit of the design. Two poles from
+   the title itself: 사유 = ink blue (the brain), 표현 = manuscript green.
+   ========================================================================== */
+
+:root{
+  --ink:#15171B;
+  --ink-2:#3A4048;
+  --paper:#FBFAF6;
+  --paper-2:#F3F1EA;
+  --sayu:#2A4A6B;          /* 思惟 — ink blue */
+  --sayu-w:#EBF0F5;
+  --pyo:#2F6A4E;           /* 表現 — 원고지 green */
+  --pyo-w:#E8F0EA;
+  --grid:#DFE4DE;
+  --rule:#CFD5CD;
+  --mark:#B23A2B;          /* proofreader's red, used almost never */
+
+  --f-disp:"Gowun Batang","Nanum Myeongjo",serif;
+  --f-body:"Pretendard","Pretendard Variable",-apple-system,system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,monospace;
+
+  --sq:clamp(58px,9.2vw,104px);   /* 원고지 square */
+  --col:min(72ch,100%);
+  --nav:280px;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--f-body);font-size:17px;line-height:1.85;
+  font-feature-settings:"case";text-rendering:optimizeLegibility;
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
+}
+
+/* ============================================================ COVER ====== */
+#cover{
+  position:relative;min-height:100svh;display:grid;
+  grid-template-columns:1fr auto;align-items:center;
+  background:var(--paper);overflow:hidden;
+  border-bottom:1px solid var(--grid);
+}
+.cv-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(to right,var(--grid) 1px,transparent 1px),
+    linear-gradient(to bottom,var(--grid) 1px,transparent 1px);
+  background-size:var(--sq) var(--sq);
+  background-position:center;
+  -webkit-mask-image:radial-gradient(120% 90% at 30% 45%,#000 25%,transparent 78%);
+  mask-image:radial-gradient(120% 90% at 30% 45%,#000 25%,transparent 78%);
+  opacity:.85;
+}
+.cv-body{
+  position:relative;padding:clamp(28px,6vw,90px);
+  max-width:min(940px,92vw);
+}
+.cv-eyebrow{
+  font-family:var(--f-body);font-weight:600;font-size:12.5px;letter-spacing:.14em;
+  color:var(--ink-2);margin:0 0 clamp(18px,4vh,40px);
+}
+.cv-eyebrow::before{
+  content:"";display:inline-block;width:26px;height:1px;
+  background:var(--pyo);vertical-align:middle;margin-right:12px;
+}
+/* the title, written one character per manuscript square */
+.cv-title{display:flex;flex-wrap:wrap;gap:0;margin:0}
+.cv-title .sq{
+  width:var(--sq);height:var(--sq);display:grid;place-items:center;
+  font-family:var(--f-disp);font-weight:700;
+  font-size:calc(var(--sq)*.62);line-height:1;
+  border:1px solid var(--rule);margin-left:-1px;
+  background:rgba(251,250,246,.72);
+  animation:sqin .7s cubic-bezier(.2,.7,.3,1) backwards;
+}
+.cv-title .sq:nth-child(1){animation-delay:.05s}
+.cv-title .sq:nth-child(2){animation-delay:.13s}
+.cv-title .sq:nth-child(3){animation-delay:.21s}
+.cv-title .sq:nth-child(4){animation-delay:.29s}
+.cv-title .sq:nth-child(5){animation-delay:.37s}
+@keyframes sqin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.cv-title .sayu{color:var(--sayu)}
+.cv-title .pyo{color:var(--pyo)}
+.cv-title .mid{color:var(--ink-2);font-size:calc(var(--sq)*.44)}
+.cv-sub{
+  font-family:var(--f-body);font-weight:500;font-size:13px;letter-spacing:.1em;
+  color:var(--ink-2);margin:26px 0 0;
+}
+.cv-line{
+  font-family:var(--f-disp);font-size:clamp(19px,2.5vw,27px);
+  color:var(--ink);margin:14px 0 clamp(30px,6vh,54px);letter-spacing:-.01em;
+}
+.cv-foot{display:flex;flex-wrap:wrap;gap:14px 54px;
+  border-top:1px solid var(--rule);padding-top:22px;max-width:720px}
+.cv-foot div{display:grid;gap:2px}
+.cv-foot span{font-family:var(--f-mono);font-size:11px;letter-spacing:.18em;color:var(--ink-2)}
+.cv-foot b{font-size:16px;font-weight:600}
+.cv-foot i{font-style:normal;font-size:12.5px;color:var(--ink-2)}
+.cv-go{
+  display:inline-flex;align-items:center;gap:10px;margin-top:clamp(28px,6vh,52px);
+  font-family:var(--f-body);font-weight:600;font-size:13px;letter-spacing:.06em;
+  color:var(--pyo);text-decoration:none;padding:12px 22px;
+  border:1px solid var(--pyo);border-radius:2px;transition:.25s;
+}
+.cv-go:hover,.cv-go:focus-visible{background:var(--pyo);color:var(--paper)}
+.cv-go span{transition:transform .25s}
+.cv-go:hover span{transform:translateY(3px)}
+/* vertical spine, set like a book edge */
+.cv-spine{
+  position:relative;align-self:stretch;padding:0 clamp(16px,3vw,44px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:16px;border-left:1px solid var(--grid);background:var(--paper-2);
+}
+.cv-spine span{
+  writing-mode:vertical-rl;font-family:var(--f-disp);font-size:17px;
+  letter-spacing:.42em;color:var(--ink-2);
+}
+.cv-spine span:first-child{color:var(--sayu)}
+.cv-spine span:last-child{color:var(--pyo)}
+.cv-spine i{display:block;width:1px;height:52px;background:var(--rule)}
+@media(max-width:820px){
+  #cover{grid-template-columns:1fr}
+  .cv-spine{display:none}
+}
+
+/* ============================================================ SHELL ====== */
+.shell{display:grid;grid-template-columns:var(--nav) 1fr;align-items:start}
+@media(max-width:1000px){.shell{grid-template-columns:1fr}}
+
+#toc{
+  position:sticky;top:0;height:100svh;overflow-y:auto;
+  border-right:1px solid var(--grid);background:var(--paper-2);
+  padding:34px 0 60px;
+}
+.toc-in{padding:0 22px}
+.toc-h{
+  font-family:var(--f-body);font-weight:600;font-size:11px;letter-spacing:.1em;
+  color:var(--ink-2);margin:24px 0 8px;
+}
+.toc-h:first-child{margin-top:0}
+.toc-g{display:grid;gap:1px}
+#toc a{
+  display:block;padding:5px 8px;color:var(--ink-2);text-decoration:none;
+  font-size:13.5px;line-height:1.45;border-radius:2px;transition:.15s;
+}
+#toc a:hover{background:#fff;color:var(--ink)}
+#toc a.on{background:#fff;color:var(--pyo);box-shadow:inset 2px 0 0 var(--pyo)}
+#toc .toc-g.weeks a{display:grid;grid-template-columns:30px 1fr;gap:8px;align-items:baseline}
+#toc .toc-g.weeks b{font-family:var(--f-mono);font-size:11px;color:var(--pyo);font-weight:500}
+#toc .toc-g.ws a{font-size:12.5px}
+
+#navbtn{display:none}
+@media(max-width:1000px){
+  #navbtn{
+    display:grid;gap:4px;position:fixed;right:16px;bottom:16px;z-index:60;
+    width:50px;height:50px;place-content:center;border-radius:50%;
+    background:var(--ink);border:0;cursor:pointer;
+    box-shadow:0 6px 22px rgba(0,0,0,.22);
+  }
+  #navbtn span{display:block;width:19px;height:1.5px;background:var(--paper)}
+  #toc{
+    position:fixed;inset:0 auto 0 0;width:min(320px,86vw);z-index:55;
+    transform:translateX(-102%);transition:transform .3s;
+    box-shadow:0 0 40px rgba(0,0,0,.15);height:100svh;
+  }
+  body.nav-open #toc{transform:none}
+}
+
+/* ============================================================= BOOK ====== */
+#book{padding:0 clamp(20px,5vw,72px) 140px}
+.sec{max-width:var(--col);margin:0 auto;padding-top:clamp(56px,9vh,110px);scroll-margin-top:20px}
+.sec+.sec{border-top:1px solid var(--grid)}
+
+h1,h2,h3{font-family:var(--f-disp);letter-spacing:-.015em;line-height:1.35}
+.sec>h1{font-size:clamp(28px,4.4vw,42px);margin:0 0 26px;font-weight:700}
+h2{
+  font-size:clamp(20px,2.6vw,25px);font-weight:700;margin:56px 0 16px;
+  padding-bottom:9px;border-bottom:1px solid var(--rule);
+}
+h3{font-size:clamp(16.5px,2vw,19px);font-weight:700;color:var(--sayu);margin:36px 0 10px}
+p{margin:0 0 15px}
+strong{font-weight:600}
+small{font-size:.85em;color:var(--ink-2)}
+.muted{color:var(--ink-2)}
+.ctr{text-align:center}
+a{color:var(--pyo)}
+
+ul{margin:0 0 18px;padding:0;list-style:none}
+li{position:relative;padding-left:19px;margin-bottom:8px}
+li::before{
+  content:"";position:absolute;left:2px;top:.72em;
+  width:5px;height:5px;border:1px solid var(--pyo);
+}
+
+/* week opener ------------------------------------------------------------ */
+.week-head{margin-bottom:34px}
+.wk-num{
+  width:56px;height:56px;display:grid;place-items:center;
+  border:1px solid var(--pyo);margin-bottom:18px;
+}
+.wk-num span{font-family:var(--f-mono);font-size:22px;color:var(--pyo)}
+.wk-num.small{width:40px;height:40px;margin-bottom:12px}
+.wk-num.small span{font-size:16px}
+.week-head h1{font-size:clamp(27px,4.2vw,40px);margin:0;font-weight:700}
+.epigraph{
+  margin:26px 0 0;padding:20px 0 20px 24px;
+  border-left:2px solid var(--sayu);
+}
+.epigraph p{
+  font-family:var(--f-disp);font-size:17px;color:var(--sayu);margin:0 0 6px;
+}
+.epigraph p:last-child{
+  font-family:var(--f-body);font-size:12.5px;letter-spacing:0;
+  color:var(--ink-2);margin-top:14px;
+}
+
+/* learning objectives ---------------------------------------------------- */
+.objectives{
+  margin:30px 0 34px;padding:24px 26px;background:var(--sayu-w);
+  border-left:3px solid var(--sayu);
+}
+.objectives .obj-label{
+  font-family:var(--f-body);font-weight:700;font-size:11.5px;letter-spacing:.1em;
+  color:var(--sayu);margin:0 0 14px;
+}
+.objectives p{margin:0 0 11px;font-size:16px;line-height:1.75}
+.objectives p:last-child{margin-bottom:0}
+.objectives p strong:first-child{color:var(--sayu)}
+
+/* key point / note ------------------------------------------------------- */
+.note{
+  margin:20px 0 24px;padding:16px 20px;background:#fff;
+  border:1px solid var(--grid);border-top:2px solid var(--pyo);
+  font-size:15.5px;line-height:1.75;
+}
+.note strong:first-child{color:var(--pyo)}
+
+/* tables ----------------------------------------------------------------- */
+.tw{overflow-x:auto;margin:0 0 24px}
+table{border-collapse:collapse;width:100%;font-size:14.5px;line-height:1.6}
+th,td{border:1px solid var(--grid);padding:9px 12px;text-align:left;vertical-align:top}
+th{background:var(--sayu);color:#fff;font-weight:600;font-size:13.5px;
+   font-family:var(--f-body);border-color:var(--sayu)}
+tbody tr:nth-child(even){background:#fff}
+
+/* student writing surfaces ------------------------------------------------ */
+.rules{margin:6px 0 22px;display:grid;gap:0}
+.rules::before{
+  content:"";display:block;height:calc(var(--n,1) * 38px);
+  background:repeating-linear-gradient(to bottom,
+    transparent 0,transparent 37px,var(--rule) 37px,var(--rule) 38px);
+}
+.writebox{
+  margin:8px 0 26px;border:1px solid var(--rule);background:#fff;
+  min-height:calc(var(--lines,6) * 34px);
+  background-image:repeating-linear-gradient(to bottom,
+    transparent 0,transparent 33px,var(--paper-2) 33px,var(--paper-2) 34px);
+}
+
+/* worksheets -------------------------------------------------------------- */
+.sec.worksheet{
+  border-left:1px dashed #B7BEB8;padding-left:clamp(18px,3vw,38px);
+}
+.ws-head{margin-bottom:26px}
+.ws-tag{
+  font-family:var(--f-body);font-weight:500;font-size:11px;letter-spacing:.08em;
+  color:#9AA1A0;margin-bottom:16px;
+}
+.scissors{margin-right:6px}
+.ws-head h2{margin:0 0 18px;border-bottom-width:2px;border-color:var(--pyo)}
+.ws-meta{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:end;
+  font-family:var(--f-mono);font-size:11px;color:var(--ink-2)}
+.ws-meta i{display:block;width:110px;border-bottom:1px solid var(--rule);height:18px}
+
+/* 15-week arc ------------------------------------------------------------- */
+.arc{margin:38px 0 10px;padding:0}
+.arc figcaption{
+  font-family:var(--f-body);font-weight:600;font-size:11.5px;letter-spacing:.1em;
+  color:var(--ink-2);margin-bottom:16px;
+}
+.arc-track{display:grid;gap:2px;grid-template-columns:8fr 4fr 3fr}
+.arc-phase{padding:18px 16px;background:#fff;border-top:3px solid;display:grid;gap:5px}
+.arc-phase b{font-family:var(--f-mono);font-size:12.5px;letter-spacing:.06em}
+.arc-phase span{font-size:14.5px;font-weight:600;line-height:1.4}
+.arc-phase em{font-style:normal;font-size:12px;color:var(--ink-2);line-height:1.6}
+.arc .p1{border-color:var(--sayu)} .arc .p1 b{color:var(--sayu)}
+.arc .p2{border-color:var(--pyo)}  .arc .p2 b{color:var(--pyo)}
+.arc .p3{border-color:var(--mark)} .arc .p3 b{color:var(--mark)}
+@media(max-width:700px){.arc-track{grid-template-columns:1fr}}
+
+:focus-visible{outline:2px solid var(--pyo);outline-offset:3px}
+
+@media print{
+  #toc,#navbtn,.cv-go{display:none}
+  .shell{grid-template-columns:1fr}
+  .sec{page-break-before:always}
+  body{font-size:10.5pt;line-height:1.75}
+}
+
+
+.topbar{
+  position:sticky;top:0;z-index:40;display:flex;align-items:center;
+  justify-content:space-between;gap:20px;padding:12px clamp(18px,4vw,34px);
+  background:rgba(251,250,246,.94);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--grid);
+}
+.tb-home{
+  font-family:var(--f-disp);font-size:17px;font-weight:700;
+  color:var(--ink);text-decoration:none;letter-spacing:.02em;
+}
+.tb-nav{display:flex;gap:4px;flex-wrap:wrap}
+.tb-nav a{
+  font-size:13px;color:var(--ink-2);text-decoration:none;
+  padding:6px 11px;border-radius:2px;transition:.15s;white-space:nowrap;
+}
+.tb-nav a:hover{background:var(--paper-2);color:var(--ink)}
+.tb-nav a.cur{color:var(--pyo);box-shadow:inset 0 -2px 0 var(--pyo)}
+@media(max-width:560px){.tb-nav a{font-size:12px;padding:5px 8px}}
+
+
+:root{--paper:#FCFBF8;--paper-2:#F2F0E9}
+body{background:var(--paper)}
+.wrap{max-width:1140px;margin:0 auto;padding:0 clamp(20px,5vw,48px)}
+
+/* ---------------------------------------------------------------- hero -- */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--grid)}
+.hero-in{
+  position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1fr);
+  gap:clamp(24px,5vw,72px);align-items:start;
+  padding-top:clamp(52px,9vh,104px);padding-bottom:clamp(48px,8vh,92px);
+}
+/* 훈민정음 — a full-bleed ground layer behind the whole hero, dissolving to
+   the left. The 계선(ruled column) grid of the 해례본 is the structural motif. */
+.hunmin{
+  position:absolute;inset:0;z-index:0;pointer-events:none;user-select:none;
+  -webkit-mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,.02) 30%,
+    rgba(0,0,0,.10) 52%,rgba(0,0,0,.38) 72%,rgba(0,0,0,.82) 89%,#000 100%);
+  mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,.02) 30%,
+    rgba(0,0,0,.10) 52%,rgba(0,0,0,.38) 72%,rgba(0,0,0,.82) 89%,#000 100%);
+}
+.hunmin-in{
+  display:flex;flex-direction:row-reverse;justify-content:flex-start;height:100%;
+  background:linear-gradient(to left,rgba(47,106,78,.045),transparent 62%);
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 62%,transparent 99%);
+  mask-image:linear-gradient(to bottom,#000 0%,#000 62%,transparent 99%);
+}
+.hunmin cx{
+  writing-mode:vertical-rl;display:block;height:100%;padding-top:clamp(22px,4vh,42px);
+  border-left:1px solid var(--grid);
+  font-family:"Noto Serif KR","Noto Serif CJK KR","Batang",serif;
+  font-size:clamp(18px,1.95vw,25px);letter-spacing:.3em;line-height:2;
+  color:var(--sayu);opacity:.17;white-space:nowrap;
+}
+.hunmin cx.seo{opacity:.44}
+.hunmin cx.seo:nth-child(-n+3){opacity:.62;color:var(--pyo)}
+.hunmin-cap{
+  position:absolute;right:clamp(20px,5vw,48px);bottom:clamp(22px,5vh,44px);margin:0;
+  z-index:2;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.16em;
+  color:var(--ink-2);opacity:.8;text-align:right;line-height:1.9;
+}
+.hunmin-cap b{display:block;font-weight:500;color:var(--pyo)}
+@media(max-width:900px){
+  .hero-in{grid-template-columns:1fr}
+  .hunmin{-webkit-mask-image:linear-gradient(to right,transparent 0%,
+    rgba(0,0,0,.05) 26%,rgba(0,0,0,.4) 72%,#000 100%);
+    mask-image:linear-gradient(to right,transparent 0%,
+    rgba(0,0,0,.05) 26%,rgba(0,0,0,.4) 72%,#000 100%);opacity:.6}
+  .hunmin-cap{display:none}
+}
+
+.eyebrow{
+  display:flex;flex-wrap:wrap;align-items:center;gap:0 13px;
+  font-family:var(--f-body);font-weight:600;font-size:12px;letter-spacing:.16em;
+  color:var(--ink-2);margin:0 0 30px;
+}
+.eyebrow i{font-style:normal;width:24px;height:1px;background:var(--pyo)}
+.eyebrow s{text-decoration:none;color:var(--rule)}
+.hero h1{
+  font-family:var(--f-disp);font-weight:700;letter-spacing:-.025em;
+  font-size:clamp(33px,5.2vw,58px);line-height:1.3;margin:0 0 30px;color:var(--ink);
+}
+.hero h1 em{font-style:normal;color:var(--sayu)}
+.quote{border-left:2px solid var(--pyo);padding:4px 0 4px 20px;margin:0 0 34px;max-width:50ch}
+.quote p{
+  font-family:var(--f-disp);font-size:clamp(16px,1.9vw,19.5px);line-height:1.8;
+  color:var(--ink);margin:0 0 10px;
+}
+.quote cite{font-style:normal;font-family:var(--f-mono);font-size:11px;
+  letter-spacing:.1em;color:var(--ink-2)}
+.ident{
+  display:grid;grid-template-columns:auto minmax(0,1fr);gap:7px 20px;
+  align-items:baseline;padding-top:24px;border-top:1px solid var(--rule);max-width:54ch;
+}
+.ident dt{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.16em;color:var(--ink-2)}
+.ident dd{margin:0;font-size:14.5px;color:var(--ink);line-height:1.6}
+.ident dd b{font-weight:600}
+.ident dd small{color:var(--ink-2);font-size:13px}
+
+/* --------------------------------------------------------------- shelf -- */
+.shelf{padding:clamp(48px,8vh,86px) 0 clamp(52px,9vh,96px)}
+.sec-h{
+  display:flex;align-items:center;gap:14px;margin:0 0 34px;
+  font-family:var(--f-body);font-weight:600;font-size:12px;letter-spacing:.16em;
+  color:var(--ink-2);
+}
+.sec-h u{text-decoration:none;flex:1;height:1px;background:var(--grid)}
+.sec-h em{font-style:normal;font-family:var(--f-mono);color:var(--pyo);font-size:11px}
+.cards{display:grid;gap:clamp(14px,2vw,22px);grid-template-columns:repeat(3,1fr)}
+@media(max-width:880px){.cards{grid-template-columns:1fr}}
+.card{
+  position:relative;display:flex;flex-direction:column;background:#fff;
+  border:1px solid var(--grid);border-top:2px solid var(--sayu);
+  padding:24px 24px 20px;text-decoration:none;color:inherit;
+  transition:border-color .2s,box-shadow .2s;
+}
+.card.g{border-top-color:var(--pyo)}
+.card:hover,.card:focus-visible{
+  border-color:var(--rule);border-top-color:var(--pyo);
+  box-shadow:0 10px 26px -18px rgba(21,23,27,.42);
+}
+.card-vol{
+  display:flex;justify-content:space-between;font-family:var(--f-mono);
+  font-size:10.5px;letter-spacing:.14em;color:var(--ink-2);margin:0 0 18px;
+}
+.mini{display:flex;margin-bottom:16px}
+.mini span{
+  width:38px;height:38px;display:grid;place-items:center;margin-left:-1px;
+  border:1px solid var(--rule);font-family:var(--f-disp);font-weight:700;
+  font-size:21px;background:var(--paper);
+}
+.mini .b{color:var(--sayu)} .mini .g{color:var(--pyo)} .mini .n{color:var(--ink-2);font-size:15px}
+.card h3{font-family:var(--f-disp);font-size:20px;margin:0 0 9px;font-weight:700}
+.card p{font-size:14px;line-height:1.75;color:var(--ink-2);margin:0 0 22px;flex:1}
+.card-go{
+  font-family:var(--f-body);font-weight:600;font-size:12.5px;color:var(--pyo);
+  display:inline-flex;align-items:center;gap:8px;
+  padding-top:14px;border-top:1px solid var(--grid);width:100%;
+}
+.card-go i{font-style:normal;transition:transform .2s}
+.card:hover .card-go i{transform:translateX(4px)}
+
+/* --------------------------------------------------------- about + 연락 -- */
+.about{padding:clamp(44px,8vh,80px) 0;border-top:1px solid var(--grid);
+  background:var(--paper-2)}
+.about-in{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);
+  gap:clamp(24px,5vw,72px)}
+@media(max-width:820px){.about-in{grid-template-columns:1fr}}
+.about h2{font-family:var(--f-disp);font-size:clamp(22px,3vw,28px);margin:0 0 14px;font-weight:700}
+.about .fields{display:grid;gap:6px}
+.about .fields span{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;color:var(--ink-2)}
+.about p{font-size:15px;line-height:1.95;color:var(--ink-2);margin:0 0 15px;max-width:62ch}
+.about p.lead{color:var(--ink)}
+.contact{display:grid;gap:1px;margin-top:28px;background:var(--grid);
+  border:1px solid var(--grid);max-width:520px}
+.contact a{
+  display:grid;grid-template-columns:74px 1fr;gap:14px;align-items:baseline;
+  background:var(--paper-2);padding:12px 16px;text-decoration:none;
+  font-size:14px;color:var(--ink);transition:.15s;
+}
+.contact a:hover{background:#fff;color:var(--pyo)}
+.contact span{font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;color:var(--ink-2)}
+
+footer{border-top:1px solid var(--grid);padding:24px 0 46px;font-size:12.5px;color:var(--ink-2)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between}
+</style>
+</head><body>
+
+<div class="topbar">
+  <a class="tb-home" href="index.html">김희섭</a>
+  <nav class="tb-nav">
+    <a href="brain-1.html">뇌 이야기 1</a>
+    <a href="brain-2.html">뇌 이야기 2</a>
+    <a href="coursebook.html">사유와 표현</a>
+  </nav>
+</div>
+
+<header class="hero">
+  <div class="hunmin" aria-hidden="true"><div class="hunmin-in"><cx class="seo">國之語音</cx><cx class="seo">異乎中國</cx><cx class="seo">與文字不相流通</cx><cx class="seo">故愚民有所欲言</cx><cx class="seo">而終不得伸其情者多矣</cx><cx class="seo">予爲此憫然</cx><cx class="seo">新制二十八字</cx><cx class="seo">欲使人人易習</cx><cx class="seo">便於日用耳</cx><cx>ㄱ牙音如君字初發聲</cx><cx>並書如虯字初發聲</cx><cx>ㅋ牙音如快字初發聲</cx><cx>ㆁ牙音如業字初發聲</cx><cx>ㄷ舌音如斗字初發聲</cx><cx>並書如覃字初發聲</cx><cx>ㅌ舌音如呑字初發聲</cx><cx>ㄴ舌音如那字初發聲</cx><cx>ㅂ脣音如彆字初發聲</cx><cx>並書如步字初發聲</cx><cx>ㅍ脣音如漂字初發聲</cx><cx>ㅁ脣音如彌字初發聲</cx><cx>ㅈ齒音如卽字初發聲</cx><cx>並書如慈字初發聲</cx><cx>ㅊ齒音如侵字初發聲</cx><cx>ㅅ齒音如戌字初發聲</cx><cx>並書如邪字初發聲</cx><cx>ㆆ喉音如挹字初發聲</cx><cx>ㅎ喉音如虛字初發聲</cx><cx>並書如洪字初發聲</cx><cx>ㅇ喉音如欲字初發聲</cx><cx>ㄹ半舌音如閭字初發聲</cx><cx>ㅿ半齒音如穰字初發聲</cx></div></div>
+  <p class="hunmin-cap">訓民正音 御製序文<b>1446</b></p>
+  <div class="wrap hero-in">
+    <div>
+      <p class="eyebrow"><i></i>언어학<s>/</s>뇌신경언어학<s>/</s>인지과학</p>
+      <h1>언어는 뇌에서<br><em>어떻게 만들어지는가</em></h1>
+      <blockquote class="quote">
+        <p>&ldquo;뇌는 언어를 위해 뇌 전체를 사용합니다. 뇌 전체는 세상과
+           몸 전체에서 피드백을 받으며 자기 수정을 합니다.&rdquo;</p>
+        <cite>『뇌 이야기 2』 들머리</cite>
+      </blockquote>
+      <dl class="ident">
+        <dt>지은이</dt>
+        <dd><b>김희섭</b> Kim Heeseob &middot; <small>언어학 박사, 심리학 부전공</small></dd>
+        <dt>소속</dt>
+        <dd>부경대학교 명예교수 &middot; <small>2026년 2월 정년퇴임</small></dd>
+        <dt>공개</dt>
+        <dd>세 권 모두 전문을 온라인에서 읽으실 수 있습니다.</dd>
+      </dl>
+    </div>
+  </div>
+</header>
+
+<section class="shelf">
+  <div class="wrap">
+    <p class="sec-h">읽을 수 있는 책 <u></u><em>03</em></p>
+    <div class="cards">
+      <a class="card" href="brain-1.html">
+        <p class="card-vol"><span>제1권</span><span>2024</span></p>
+        <div class="mini"><span class="b">뇌</span><span class="n">1</span></div>
+        <h3>뇌 이야기 1</h3>
+        <p>두뇌의 구조와 기능, 신경전달물질, 감정과학, 읽기와 뉴런 재활용까지. 뇌과학의 기초 개념을 교양 독자의 언어로 정리했습니다.</p>
+        <span class="card-go">전문 읽기 <i>&#8594;</i></span>
+      </a>
+      <a class="card" href="brain-2.html">
+        <p class="card-vol"><span>제2권</span><span>2026</span></p>
+        <div class="mini"><span class="b">뇌</span><span class="n">2</span></div>
+        <h3>뇌 이야기 2</h3>
+        <p>뇌의 언어중추를 중심에 두고 언어의 의미를 다시 읽습니다. 촘스키와 자극의 빈곤, 동물의 언어와 제스처, 뇌과학 101, 자연모방, 언어 행위.</p>
+        <span class="card-go">전문 읽기 <i>&#8594;</i></span>
+      </a>
+      <a class="card g" href="coursebook.html">
+        <p class="card-vol"><span>코스워크북</span><span>2026</span></p>
+        <div class="mini"><span class="b">사</span><span class="b">유</span></div>
+        <h3>사유와 표현</h3>
+        <p>뇌과학의 근거 위에서 글쓰기를 훈련하는 15주 과정. 주차별 워크시트와 개념어 사전을 함께 실었습니다.</p>
+        <span class="card-go">전문 읽기 <i>&#8594;</i></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="about">
+  <div class="wrap about-in">
+    <div>
+      <h2>지은이</h2>
+      <div class="fields">
+        <span>LINGUISTICS</span><span>NEUROLINGUISTICS</span><span>COGNITIVE SCIENCE</span>
+      </div>
+    </div>
+    <div>
+      <p class="lead">1979년 부산대학교 국어국문학과에 입학해 한국어를 가르치는 사람이 되고자 했고,
+         바라던 대로 되었습니다. 2026년 2월 부경대학교에서 정년퇴임할 때까지
+         45년을 대학에 머물렀습니다. 젊은 학생들과 새 책을 읽고, 토론하고,
+         논문을 쓰는 시간이었습니다.</p>
+      <p>인디애나 대학교(Indiana University@ Bloomington)에서 언어학으로 박사학위를 받고 
+         심리학을 부전공한 터라 뇌에 대한 관심이 오래
+         이어졌습니다. 2020년 무렵부터 뇌과학 번역서와 강의가 쏟아지기 시작했고,
+         그것을 따라 읽으며 정리한 결과가 『뇌 이야기 1』과 『뇌 이야기 2』입니다.
+         앞의 책은 뇌과학의 기초 개념을, 뒤의 책은 뇌의 언어중추를 중심에 두었습니다.</p>
+      <p>『사유와 표현』은 이 두 권을 부교재 삼아 강의실에서 쓰던 15주 과정을
+         한 권으로 묶은 것입니다. 뇌 공부는 곧 마음 공부이고, 마음 공부는
+         몸을 쓰는 일이기도 하다는 생각으로 썼습니다.</p>
+      <div class="contact">
+        <a href="mailto:hskim@pknu.ac.kr"><span>EMAIL</span>hskim@pknu.ac.kr</a>
+        <a href="https://kimheeseob.com"><span>SITE</span>kimheeseob.com</a>
+        <a href="https://blog.naver.com/nahrie"><span>BLOG</span>nahrie님의 블로그</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap">
+  <span>&copy; 2026 김희섭 &middot; 『뇌 이야기 1&middot;2』 세종출판사</span>
+  <span>배경 글 &middot; 訓民正音 御製序文 (1446)</span>
+</div></footer>
+
+</body></html>
