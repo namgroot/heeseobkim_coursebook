@@ -335,6 +335,15 @@ tbody tr:nth-child(even){background:#fff}
 .tb-nav a:hover{background:var(--paper-2);color:var(--ink)}
 .tb-nav a.cur{color:var(--pyo);box-shadow:inset 0 -2px 0 var(--pyo)}
 @media(max-width:560px){.tb-nav a{font-size:12px;padding:5px 8px}}
+
+/* --- mobile overflow fix --- */
+.shell, .shell > *, #book { min-width: 0; }
+.sec { min-width: 0; }
+@media (max-width: 1000px) {
+  #book table { max-width: 100%; }
+  #book p, #book li, #book h1, #book h2, #book h3, #book h4,
+  #book td, #book th { overflow-wrap: anywhere; word-break: keep-all; }
+}
 </style>
 </head><body>
 
