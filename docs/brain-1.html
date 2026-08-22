@@ -370,6 +370,15 @@ p sup{
   border-bottom:2px solid var(--pyo);
 }
 #book h3{font-size:clamp(16px,2vw,18.5px);margin-top:34px}
+
+/* --- mobile overflow fix --- */
+.shell, .shell > *, #book { min-width: 0; }
+.sec { min-width: 0; }
+@media (max-width: 1000px) {
+  #book table { max-width: 100%; }
+  #book p, #book li, #book h1, #book h2, #book h3, #book h4,
+  #book td, #book th { overflow-wrap: anywhere; word-break: keep-all; }
+}
 </style>
 </head><body>
 
