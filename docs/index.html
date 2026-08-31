@@ -313,10 +313,25 @@ tbody tr:nth-child(even){background:#fff}
   body{font-size:10.5pt;line-height:1.75}
 }
 
+/* --- mobile overflow fix -------------------------------------------------
+   .shell is a grid; #book is a grid item and defaults to min-width:auto, so
+   the 1fr track cannot shrink below its min-content width. .sec's 72ch then
+   sets that floor (~779px) and the document inflates past the viewport. --- */
+.shell, .shell > *, #book{min-width:0}
+.sec{min-width:0}
+@media (max-width:1000px){
+  #book table{max-width:100%}
+  #book p,#book li,#book h1,#book h2,#book h3,#book h4,
+  #book td,#book th{overflow-wrap:anywhere;word-break:keep-all}
+}
 
+
+:root{--tb:52px}
+#toc{top:var(--tb);height:calc(100svh - var(--tb))}
+@media(max-width:1000px){#toc{top:0;height:100svh}}
 .topbar{
   position:sticky;top:0;z-index:40;display:flex;align-items:center;
-  justify-content:space-between;gap:20px;padding:12px clamp(18px,4vw,34px);
+  justify-content:space-between;gap:20px;padding:11px clamp(18px,4vw,34px);
   background:rgba(251,250,246,.94);backdrop-filter:blur(8px);
   border-bottom:1px solid var(--grid);
 }
@@ -324,14 +339,48 @@ tbody tr:nth-child(even){background:#fff}
   font-family:var(--f-disp);font-size:17px;font-weight:700;
   color:var(--ink);text-decoration:none;letter-spacing:.02em;
 }
-.tb-nav{display:flex;gap:4px;flex-wrap:wrap}
-.tb-nav a{
-  font-size:13px;color:var(--ink-2);text-decoration:none;
-  padding:6px 11px;border-radius:2px;transition:.15s;white-space:nowrap;
+/* collapsible book menu, top right */
+.tb-menu{position:relative}
+.tb-menu summary{
+  list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:9px;
+  padding:6px 11px 6px 13px;border:1px solid var(--rule);border-radius:2px;
+  font-family:var(--f-body);font-weight:600;font-size:13px;color:var(--ink);
+  background:var(--paper);user-select:none;transition:.15s;
 }
-.tb-nav a:hover{background:var(--paper-2);color:var(--ink)}
-.tb-nav a.cur{color:var(--pyo);box-shadow:inset 0 -2px 0 var(--pyo)}
-@media(max-width:560px){.tb-nav a{font-size:12px;padding:5px 8px}}
+.tb-menu summary::-webkit-details-marker{display:none}
+.tb-menu summary:hover,.tb-menu[open] summary{border-color:var(--pyo);color:var(--pyo)}
+.tb-menu summary i{
+  width:9px;height:9px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;
+  transform:translateY(-2px) rotate(45deg);transition:transform .2s;
+}
+.tb-menu[open] summary i{transform:translateY(2px) rotate(-135deg)}
+.tb-panel{
+  position:absolute;right:0;top:calc(100% + 8px);min-width:270px;
+  background:var(--paper);border:1px solid var(--rule);
+  box-shadow:0 14px 34px -14px rgba(21,23,27,.35);padding:8px 0 6px;
+  animation:tbin .16s ease-out;
+}
+@keyframes tbin{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.tb-g{
+  margin:8px 16px 3px;font-family:var(--f-mono);font-size:10px;letter-spacing:.16em;
+  color:var(--ink-2);
+}
+.tb-panel a{
+  display:flex;justify-content:space-between;align-items:baseline;gap:18px;
+  padding:8px 16px;text-decoration:none;color:var(--ink);font-size:14px;transition:.12s;
+}
+.tb-panel a b{font-weight:500}
+.tb-panel a small{font-family:var(--f-mono);font-size:10.5px;color:var(--ink-2);white-space:nowrap}
+.tb-panel a:hover{background:#fff;color:var(--pyo)}
+.tb-panel a.cur{color:var(--pyo);box-shadow:inset 2px 0 0 var(--pyo);background:#fff}
+.tb-panel a.cur b{font-weight:600}
+.tb-index{
+  margin-top:6px;border-top:1px solid var(--grid);padding-top:10px!important;
+  font-size:12.5px!important;color:var(--ink-2)!important;
+}
+@media(max-width:760px){
+  .tb-panel{position:fixed;left:12px;right:12px;top:calc(var(--tb) + 4px);min-width:0}
+}
 
 
 :root{--paper:#FCFBF8;--paper-2:#F2F0E9}
@@ -422,7 +471,8 @@ body{background:var(--paper)}
 .sec-h u{text-decoration:none;flex:1;height:1px;background:var(--grid)}
 .sec-h em{font-style:normal;font-family:var(--f-mono);color:var(--pyo);font-size:11px}
 .cards{display:grid;gap:clamp(14px,2vw,22px);grid-template-columns:repeat(3,1fr)}
-@media(max-width:880px){.cards{grid-template-columns:1fr}}
+.cards.two{grid-template-columns:repeat(2,1fr);max-width:760px}
+@media(max-width:880px){.cards,.cards.two{grid-template-columns:1fr}}
 .card{
   position:relative;display:flex;flex-direction:column;background:#fff;
   border:1px solid var(--grid);border-top:2px solid var(--sayu);
@@ -481,13 +531,23 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
 </style>
 </head><body>
 
+
 <div class="topbar">
   <a class="tb-home" href="index.html">김희섭</a>
-  <nav class="tb-nav">
-    <a href="brain-1.html">뇌 이야기 1</a>
-    <a href="brain-2.html">뇌 이야기 2</a>
-    <a href="coursebook.html">사유와 표현</a>
-  </nav>
+  <details class="tb-menu">
+    <summary aria-label="책 목록 열기"><span>책</span><i></i></summary>
+    <nav class="tb-panel">
+      <p class="tb-g">뇌과학 교양서</p>
+      <a href="brain-1.html"><b>뇌 이야기 1</b><small>2024</small></a>
+      <a href="brain-2.html"><b>뇌 이야기 2</b><small>2026</small></a>
+      <p class="tb-g">코스워크북</p>
+      <a href="coursebook.html"><b>사유와 표현</b><small>15주</small></a>
+      <p class="tb-g">연구서</p>
+      <a href="cefr.html"><b>CEFR와 한국의 외국어교육</b><small>2019 · 공저</small></a>
+      <a href="dialect.html"><b>방언과 스토리텔링</b><small>2007</small></a>
+      <a class="tb-index" href="index.html">← 처음으로</a>
+    </nav>
+  </details>
 </div>
 
 <header class="hero">
@@ -508,7 +568,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
         <dt>소속</dt>
         <dd>부경대학교 명예교수 &middot; <small>2026년 2월 정년퇴임</small></dd>
         <dt>공개</dt>
-        <dd>세 권 모두 전문을 온라인에서 읽으실 수 있습니다.</dd>
+        <dd>다섯 권 모두 전문을 온라인에서 읽으실 수 있습니다.</dd>
       </dl>
     </div>
   </div>
@@ -516,18 +576,18 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
 
 <section class="shelf">
   <div class="wrap">
-    <p class="sec-h">읽을 수 있는 책 <u></u><em>03</em></p>
+    <p class="sec-h">뇌과학 교양서와 코스워크북 <u></u><em>03</em></p>
     <div class="cards">
       <a class="card" href="brain-1.html">
         <p class="card-vol"><span>제1권</span><span>2024</span></p>
-        <div class="mini"><span class="b">뇌</span><span class="n">1</span></div>
+        <div class="mini"><span class="b">뇌</span><span class="g">1</span></div>
         <h3>뇌 이야기 1</h3>
         <p>두뇌의 구조와 기능, 신경전달물질, 감정과학, 읽기와 뉴런 재활용까지. 뇌과학의 기초 개념을 교양 독자의 언어로 정리했습니다.</p>
         <span class="card-go">전문 읽기 <i>&#8594;</i></span>
       </a>
       <a class="card" href="brain-2.html">
         <p class="card-vol"><span>제2권</span><span>2026</span></p>
-        <div class="mini"><span class="b">뇌</span><span class="n">2</span></div>
+        <div class="mini"><span class="b">뇌</span><span class="g">2</span></div>
         <h3>뇌 이야기 2</h3>
         <p>뇌의 언어중추를 중심에 두고 언어의 의미를 다시 읽습니다. 촘스키와 자극의 빈곤, 동물의 언어와 제스처, 뇌과학 101, 자연모방, 언어 행위.</p>
         <span class="card-go">전문 읽기 <i>&#8594;</i></span>
@@ -537,6 +597,23 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
         <div class="mini"><span class="b">사</span><span class="b">유</span></div>
         <h3>사유와 표현</h3>
         <p>뇌과학의 근거 위에서 글쓰기를 훈련하는 15주 과정. 주차별 워크시트와 개념어 사전을 함께 실었습니다.</p>
+        <span class="card-go">전문 읽기 <i>&#8594;</i></span>
+      </a>
+    </div>
+    <p class="sec-h" style="margin-top:clamp(40px,7vh,64px)">연구서 <u></u><em>02</em></p>
+    <div class="cards two">
+      <a class="card" href="cefr.html">
+        <p class="card-vol"><span>연구서 · 공저</span><span>2019</span></p>
+        <div class="mini"><span class="b">C</span><span class="g">E</span><span class="b">F</span><span class="g">R</span></div>
+        <h3>CEFR와 한국의 외국어교육</h3>
+        <p>유럽공통참조기준의 배경과 언어관, 예시적 능력기술문, 유럽언어 포트폴리오, 일본의 도입 사례를 살피고 한국 외국어교육의 방향을 모색합니다. 김희섭·이상수 공저, 부경대학교 출판부.</p>
+        <span class="card-go">전문 읽기 <i>&#8594;</i></span>
+      </a>
+      <a class="card g" href="dialect.html">
+        <p class="card-vol"><span>연구서</span><span>2007</span></p>
+        <div class="mini"><span class="b">방</span><span class="b">언</span></div>
+        <h3>방언과 스토리텔링</h3>
+        <p>한국어 방언의 여러 표현형이 지닌 스토리텔링의 가치. 대중매체 속 지역방언, 영화의 방언의식, 방언을 활용한 브랜드 개발, 충청도 방언의 옛말, 유아어, 음성착각과 말장난.</p>
         <span class="card-go">전문 읽기 <i>&#8594;</i></span>
       </a>
     </div>
@@ -552,22 +629,25 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
       </div>
     </div>
     <div>
-      <p class="lead">1979년 부산대학교 국어국문학과에 입학해 한국어를 가르치는 사람이 되고자 했고,
+      <p class="lead">1979년 국어국문학과에 입학해 한국어를 가르치는 사람이 되고자 했고,
          바라던 대로 되었습니다. 2026년 2월 부경대학교에서 정년퇴임할 때까지
          45년을 대학에 머물렀습니다. 젊은 학생들과 새 책을 읽고, 토론하고,
          논문을 쓰는 시간이었습니다.</p>
-      <p>인디애나 대학교(Indiana University@ Bloomington)에서 언어학으로 박사학위를 받고 
-         심리학을 부전공한 터라 뇌에 대한 관심이 오래
+      <p>언어학으로 박사학위를 받고 심리학을 부전공한 터라 뇌에 대한 관심이 오래
          이어졌습니다. 2020년 무렵부터 뇌과학 번역서와 강의가 쏟아지기 시작했고,
          그것을 따라 읽으며 정리한 결과가 『뇌 이야기 1』과 『뇌 이야기 2』입니다.
          앞의 책은 뇌과학의 기초 개념을, 뒤의 책은 뇌의 언어중추를 중심에 두었습니다.</p>
       <p>『사유와 표현』은 이 두 권을 부교재 삼아 강의실에서 쓰던 15주 과정을
          한 권으로 묶은 것입니다. 뇌 공부는 곧 마음 공부이고, 마음 공부는
          몸을 쓰는 일이기도 하다는 생각으로 썼습니다.</p>
+      <p>그 이전의 연구서 두 권도 함께 열어 둡니다. 『방언과 스토리텔링』(2007)은
+         한국어 방언을 문화콘텐츠의 보물상자로 읽은 기록이고, 『CEFR와 한국의
+         외국어교육』(2019, 이상수 공저)은 유럽공통참조기준을 한국 외국어교육의
+         자리에서 다시 살핀 책입니다.</p>
       <div class="contact">
         <a href="mailto:hskim@pknu.ac.kr"><span>EMAIL</span>hskim@pknu.ac.kr</a>
         <a href="https://heeseobkim.com"><span>SITE</span>heeseobkim.com</a>
-        <a href="https://blog.naver.com/nahrie"><span>BLOG</span>nahrie님의 블로그</a>
+        <a href="mailto:nahrie@naver.com"><span>BLOG</span>nahrie님의 블로그</a>
       </div>
     </div>
   </div>
@@ -578,4 +658,12 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
   <span>배경 글 &middot; 訓民正音 御製序文 (1446)</span>
 </div></footer>
 
+<script>
+(function(){
+  var m=document.querySelector('.tb-menu'); if(!m) return;
+  document.addEventListener('click',function(e){ if(m.open && !m.contains(e.target)) m.open=false; });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') m.open=false; });
+  m.querySelectorAll('.tb-panel a').forEach(function(a){ a.addEventListener('click',function(){ m.open=false; }); });
+})();
+</script>
 </body></html>
